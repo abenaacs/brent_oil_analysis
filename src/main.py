@@ -6,6 +6,13 @@ from utils.data_utils import clean_data, convert_to_datetime
 
 
 def main():
+    """
+    Main function to execute the entire pipeline:
+    1. Load and preprocess the data.
+    2. Visualize the time series.
+    3. Fit ARIMA and GARCH models.
+    4. Perform Bayesian inference.
+    """
     # Step 1: Load and preprocess data
     data_loader = BrentOilData("data/raw_data.csv")
     data_loader.preprocess()
@@ -21,7 +28,6 @@ def main():
 
     print("ARIMA Model Summary:")
     print(arima_results.summary())
-
     print("\nGARCH Model Summary:")
     print(garch_results.summary())
 
