@@ -1,6 +1,5 @@
 import pandas as pd
-import statsmodels.api as sm
-from arch import arch_model
+from utils.model_utils import fit_arima_model, fit_garch_model
 
 
 class TimeSeriesModel:
@@ -8,12 +7,7 @@ class TimeSeriesModel:
         self.data = data
 
     def fit_arima(self, order=(1, 1, 1)):
-        model = sm.tsa.ARIMA(self.data["Price"], order=order)
-        results = model.fit()
-        return results
+        return fit_arima_model(self.data, order=order)
 
     def fit_garch(self, p=1, q=1):
-        returns = self.data["Price"].pct_change().dropna()
-        garch_model = arch_model(returns, vol="GARCH", p=p, q=q)
-        results = garch_model.fit(disp="off")
-        return results
+        return fit_garch_model(self.data, p=p, q=q)
