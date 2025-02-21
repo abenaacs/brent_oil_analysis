@@ -74,20 +74,29 @@ The project is organized into the following directories and files:
 ```
 brent_oil_analysis/
 │
-├── data/                     # Raw and processed datasets
+├── data/
 │   ├── raw_data.csv          # Raw Brent oil prices dataset
 │   └── processed_data.csv    # Processed dataset after cleaning
 │
-├── src/                      # Source code for analysis
+├── src/
 │   ├── data_preprocessing.py # Data cleaning and preprocessing
 │   ├── time_series_models.py # Time series models (ARIMA, GARCH)
 │   ├── bayesian_inference.py # Bayesian modeling using PyMC3
-│   ├── utils.py              # Utility functions (visualization, helpers)
 │   └── main.py               # Main script to execute the workflow
 │
+├── utils/
+│   ├── visualization_utils.py # Functions for plotting and visualizations
+│   ├── data_utils.py          # Functions for data-related operations
+│   └── model_utils.py         # Functions for model evaluation and diagnostics
+│
+├── config.py                 # Central configuration file
 ├── notebooks/                # Jupyter notebooks for exploratory analysis
 │   ├── exploratory_analysis.ipynb  # Initial data exploration
 │   └── model_evaluation.ipynb      # Model evaluation and insights
+│
+├── reports/                  # Generated reports and visualizations
+│   ├── analysis_report.pdf   # Final report summarizing findings
+│   └── visualizations/       # Saved plots and charts
 │
 ├── README.md                 # Project overview and instructions
 └── requirements.txt          # Python dependencies for the project
