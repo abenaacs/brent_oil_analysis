@@ -1,4 +1,5 @@
 import pandas as pd
+from utils.data_utils import clean_data, convert_to_datetime
 
 
 class BrentOilData:
@@ -7,15 +8,13 @@ class BrentOilData:
 
     def preprocess(self):
         # Convert Date column to datetime format
-        self.data["Date"] = pd.to_datetime(self.data["Date"], format="%d-%b-%y")
+        self.data = convert_to_datetime(self.data, date_column="Date")
+
+        # Handle missing values
+        self.data = clean_data(self.data)
 
         # Sort by date
         self.data.sort_values("Date", inplace=True)
-
-        # Handle missing values (forward fill)
-        self.data["Price"].fillna(method="ffill", inplace=True)
-
-        # Reset index
         self.data.reset_index(drop=True, inplace=True)
 
     def get_data(self):
