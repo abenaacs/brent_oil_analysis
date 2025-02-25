@@ -3,6 +3,9 @@ from src.time_series_models import TimeSeriesModel
 from src.bayesian_inference import BayesianModel
 from utils.visualization_utils import plot_time_series
 from utils.data_utils import clean_data, convert_to_datetime
+from src.data_preprocessing import BrentOilData
+from src.feature_engineering import create_lagged_features, compute_rolling_statistics
+from src.model_training import fit_arima_model, evaluate_model
 
 
 def main():
@@ -37,6 +40,22 @@ def main():
 
     # Save results (optional)
     # Further analysis and reporting can be added here
+    # Step 1: Load and preprocess data
+    data_loader = BrentOilData("data/raw_data.csv")
+    data_loader.preprocess()
+    data = data_loader.get_data()
+
+    # Step 2: Feature engineering
+    data = create_lagged_features(data, column="Price", lags=[1, 2, 3])
+    data = compute_rolling_statistics(data, column="Price", window=7)
+
+    # Step 3: Train ARIMA model
+    arima_model = fit_arima_model(data["Price"], order=(5, 1, 0))
+    predictions = arima_model.forecast(steps=10)
+
+    # Step 4: Evaluate model
+    rmse = evaluate_model(data["Price"][-10:], predictions)
+    print(f"RMSE: {rmse}")
 
 
 if __name__ == "__main__":
